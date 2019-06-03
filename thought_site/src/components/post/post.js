@@ -3,22 +3,26 @@ import './post.css';
 import NameInput from './name_input';
 import PostInput from './thought_input';
 import { connect } from 'react-redux';
+import { updatePosts } from '../../actions';
+import { updateField } from '../../actions';
+
 
 class ThoughtForm extends React.Component {
-    savePost() {
+    savePost(e) {
+        e.preventDefault(); //don't reload -- want to see the new post on the page
         let newPost = {
-            fname: this.props.firstName,
-            lname: this.props.lastName,
+            firstName: this.props.firstName,
+            lastName: this.props.lastName,
             thought: this.props.thought
         };
-    
-        let posts = JSON.parse(localStorage.getItem("postsKey"));
-        if (posts === null) {
-            localStorage.setItem("postsKey", JSON.stringify([newPost]));
-            return;
-        }
-        posts.push(newPost);
-        localStorage.setItem("postsKey", JSON.stringify(posts));
+
+        this.props.updatePosts(newPost);
+        this.props.updateField("", 'clear');
+    }
+
+    clearForm(e) {
+        e.preventDefault(); //don't reload -- want to see the new post on the page
+        this.props.updateField("", 'clear');
     }
 
     render() {
@@ -29,7 +33,7 @@ class ThoughtForm extends React.Component {
                     <PostInput/>
                     <div className="row">
 		                <button type="submit" id="submitButton" disabled={ !this.props.firstName || !this.props.lastName || !this.props.thought }>Submit</button>
-		                <input type="reset" id="resetButton" value="Clear"></input>
+                        <button type="reset" id="resetButton" onClick={ this.clearForm.bind(this) }>Clear</button>
 		            </div>
                 </form>
             </div>
@@ -41,8 +45,10 @@ const mapStateToProps = (state) => {
     return {
         firstName: state.form.firstName,
         lastName: state.form.lastName,
-        thought: state.form.thought
+        thought: state.form.thought,
+
+        posts: state.posts
     };
 }
 
-export default connect(mapStateToProps)(ThoughtForm);
+export default connect(mapStateToProps, { updatePosts, updateField })(ThoughtForm);

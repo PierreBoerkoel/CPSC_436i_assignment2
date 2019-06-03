@@ -5,7 +5,6 @@ import './navbar.css';
 
 class Navbar extends React.Component {
     navigate(page) {
-        console.log(page);
         this.props.updatePage(page);
     }
     render() {

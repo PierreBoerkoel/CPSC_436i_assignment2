@@ -15,7 +15,7 @@ label {
   display: inline-block;
 }
   
-#submitButton, input[type=reset] {
+#submitButton, #resetButton {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;

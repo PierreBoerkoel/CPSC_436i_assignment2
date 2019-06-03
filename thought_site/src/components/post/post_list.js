@@ -1,14 +1,15 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
+import { connect } from 'react-redux';
 
 class PostList extends React.Component {
     render() {
-        const posts = JSON.parse(localStorage.getItem("postsKey"));
-        if (posts === null) {
+        const posts = this.props.posts;
+        if (posts == null) {
             return null;
         }
         const listItems = posts.map((post) =>
-            <Collapsible key={ post.fname + post.lname } trigger={post.fname + " " + post.lname}>
+            <Collapsible key={ post.firstName + post.lastName } trigger={post.firstName + " " + post.lastName}>
                 <p>{post.thought}</p>
             </Collapsible>
         );
@@ -21,4 +22,10 @@ class PostList extends React.Component {
     }
 }
 
-export default PostList;
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts
+    };
+}
+
+export default connect(mapStateToProps)(PostList);
