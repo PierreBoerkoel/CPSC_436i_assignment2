@@ -21,7 +21,7 @@ class NameInput extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-25">
-                        <label>LastName</label>
+                        <label>Last Name</label>
                     </div>
                     <div className="col-75">
                         <input type="text" value={ this.props.lastName } onChange={ this.handleUpdate.bind(this, 'lastName') } name="lastName" placeholder="Your last name..."></input>

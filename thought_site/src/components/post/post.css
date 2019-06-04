@@ -42,8 +42,8 @@ label {
   background-color: #a30000;
 }
 
-#postListing {
-  background-color: rgba(204, 204, 204,0.5); 
+#postTitle, #postInfo {
+  color: #ccc;
 }
 
 .container {
@@ -72,7 +72,7 @@ label {
 }
 
 .Collapsible {
-  background-color:rgba(204, 204, 204,0.5);
+  color: #ccc;
 }
 
 #form {

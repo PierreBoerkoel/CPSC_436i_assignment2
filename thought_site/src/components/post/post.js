@@ -1,10 +1,9 @@
 import React from 'react';
-import './post.css';
 import NameInput from './name_input';
 import PostInput from './thought_input';
 import { connect } from 'react-redux';
-import { updatePosts } from '../../actions';
-import { updateField } from '../../actions';
+import { updatePosts, updateField } from '../../actions';
+import './post.css';
 
 
 class ThoughtForm extends React.Component {
@@ -21,7 +20,7 @@ class ThoughtForm extends React.Component {
     }
 
     clearForm(e) {
-        e.preventDefault(); //don't reload -- want to see the new post on the page
+        e.preventDefault(); //don't reload -- want to see any new posts on the page
         this.props.updateField("", 'clear');
     }
 
