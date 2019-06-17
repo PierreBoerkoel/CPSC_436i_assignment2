@@ -64,13 +64,14 @@ router.delete('/deleteData', (req, res) => {
 router.post('/putData', (req, res) => {
     let data = new Data();
 
-    const { firstName, lastName, thought } = req.body;
-    if (!firstName || !lastName || !thought) {
+    const { _id, firstName, lastName, thought } = req.body;
+    if (!_id || !firstName || !lastName || !thought) {
         return res.json({
         success: false,
         error: 'INVALID INPUTS',
         });
     }
+    data._id = _id;
     data.firstName = firstName;
     data.lastName = lastName;
     data.thought = thought;

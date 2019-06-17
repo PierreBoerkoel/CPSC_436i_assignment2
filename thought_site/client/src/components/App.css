@@ -22,3 +22,18 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.addPostButton {
+  display: block;
+  margin: 0 auto;
+  background-color: rgb(75, 75, 75);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addPostButton:hover {
+  background-color: rgb(61, 61, 61);
+}

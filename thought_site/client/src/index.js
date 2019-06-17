@@ -8,10 +8,10 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import './index.css';
 import App from './components/App';
-import { fetchThoughtData } from './actions/index'
+import { fetchThoughtDataFromDb } from './actions/index'
 
 const store= createStore(reducers, applyMiddleware(thunk));
-store.dispatch(fetchThoughtData());
+store.dispatch(fetchThoughtDataFromDb());
 
 ReactDOM.render(
     <Provider store={ store }>

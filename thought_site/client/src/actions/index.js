@@ -27,16 +27,24 @@ export const updateField = (newValue, fieldType) => {
     } 
 };
 
+export const putThought = (newPost) => {
+    return {
+        type: 'ADD_THOUGHT',
+        payload: newPost
+    }
+}
+
 export const putThoughtData = (newPost) => {
-    return () => {
+    return (dispatch) => {
         return axios.post('http://localhost:3001/api/putData',
-            {
+            {   
+                _id: newPost._id,
                 firstName: newPost.firstName,
                 lastName: newPost.lastName,
                 thought: newPost.thought
-            }).catch(error => {
-                throw(error);
-            })
+            }).then(
+                dispatch(putThought(newPost))
+            );
     };
 }
 
@@ -47,6 +55,13 @@ export const updatePage = (page) => {
     }
 }
 
+export const toggleFormInput = (show) => {
+    return {
+        type: 'TOGGLE_FORM_INPUT',
+        payload: show
+    }
+}
+
 export const fetchData = (data) => {
     return {
         type: 'FETCH_THOUGHT_DATA',
@@ -54,11 +69,10 @@ export const fetchData = (data) => {
     }
 }
 
-export const fetchThoughtData = () => {
+export const fetchThoughtDataFromDb = () => {
     return (dispatch) => {
         return axios.get('http://localhost:3001/api/getData')
-            // .then((data) => data.json())
-            .then(response => {//(fetchData(res.data))) 
+            .then(response => {
                 dispatch(fetchData(response.data))
             }).catch(error => {
                 throw(error);
@@ -66,59 +80,20 @@ export const fetchThoughtData = () => {
     };       
 };
 
-
-// getDataFromDb = () => {
-//     fetch('http://localhost:3001/api/getData')
-//     .then((data) => data.json())
-//     .then((res) => this.setState({ data: res.data }));
-// };
-
-// // our put method that uses our backend api
-// // to create new query into our data base
-// putDataToDB = (message) => {
-//     let currentIds = this.state.data.map((data) => data.id);
-//     let idToBeAdded = 0;
-//     while (currentIds.includes(idToBeAdded)) {
-//     ++idToBeAdded;
-//     }
-
-//     axios.post('http://localhost:3001/api/putData', {
-//     id: idToBeAdded,
-//     message: message,
-//     });
-// };
-
-// // our delete method that uses our backend api
-// // to remove existing database information
-// deleteFromDB = (idTodelete) => {
-//     parseInt(idTodelete);
-//     let objIdToDelete = null;
-//     this.state.data.forEach((dat) => {
-//     if (dat.id == idTodelete) {
-//         objIdToDelete = dat._id;
-//     }
-//     });
-
-//     axios.delete('http://localhost:3001/api/deleteData', {
-//     data: {
-//         id: objIdToDelete,
-//     },
-//     });
-// };
-
-// // our update method that uses our backend api
-// // to overwrite existing data base information
-// updateDB = (idToUpdate, updateToApply) => {
-//     let objIdToUpdate = null;
-//     parseInt(idToUpdate);
-//     this.state.data.forEach((dat) => {
-//     if (dat.id == idToUpdate) {
-//         objIdToUpdate = dat._id;
-//     }
-//     });
-
-//     axios.post('http://localhost:3001/api/updateData', {
-//     id: objIdToUpdate,
-//     update: { message: updateToApply },
-//     });
-// };
+export const deleteThought = (postid) => {
+    return {
+        type: 'DELETE_THOUGHT',
+        payload: postid
+    }
+}
+export const deleteThoughtDataFromDb = (postid) => {
+    return (dispatch) => {
+        return axios.delete('http://localhost:3001/api/deleteData', {
+            data: {
+                id: postid
+            }
+        }).then(
+            dispatch(deleteThought(postid))
+        );
+    };
+}

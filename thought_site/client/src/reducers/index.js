@@ -21,11 +21,25 @@ const formReducer = (state = initialState, action) => {
 	}
 }
 
-const postsReducer = (state = null, action) => {
-	if (action.type === 'FETCH_THOUGHT_DATA') {
-			return action.payload;
+const formViewReducer = (show = false, action) => {
+	if (action.type === 'TOGGLE_FORM_INPUT') {
+		return !action.payload;
 	}
-	return state;
+	return show;
+}
+
+const postsReducer = (posts = null, action) => {
+	switch (action.type) {
+		case 'FETCH_THOUGHT_DATA':
+			return action.payload;
+		case 'DELETE_THOUGHT':
+			console.log(posts)
+			return posts.filter(post => post._id !== action.payload)
+		case 'ADD_THOUGHT':
+			return [...posts, action.payload]
+		default:
+			return posts;
+	}
 }
 
 const viewReducer = (page = 'Home', action) => {
@@ -38,5 +52,6 @@ const viewReducer = (page = 'Home', action) => {
 export default combineReducers({ 
 	form: formReducer,
 	renderPage: viewReducer,
-	posts: postsReducer
+	posts: postsReducer,
+	showForm: formViewReducer
 });
