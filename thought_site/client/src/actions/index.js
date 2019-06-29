@@ -42,6 +42,8 @@ export const putThoughtData = (newPost) => {
                 firstName: newPost.firstName,
                 lastName: newPost.lastName,
                 thought: newPost.thought
+            }).catch(error => {
+                throw error;
             }).then(
                 dispatch(putThought(newPost))
             );
@@ -63,6 +65,7 @@ export const toggleFormInput = (show) => {
 }
 
 export const fetchData = (data) => {
+    console.log(data)
     return {
         type: 'FETCH_THOUGHT_DATA',
         payload: data.data
@@ -72,11 +75,11 @@ export const fetchData = (data) => {
 export const fetchThoughtDataFromDb = () => {
     return (dispatch) => {
         return axios.get('http://localhost:3001/api/getData')
-            .then(response => {
-                dispatch(fetchData(response.data))
-            }).catch(error => {
+            .catch(error => {
                 throw(error);
-            });
+            }).then(response => {
+                dispatch(fetchData(response.data))
+            })
     };       
 };
 

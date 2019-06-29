@@ -33,9 +33,11 @@ const postsReducer = (posts = null, action) => {
 		case 'FETCH_THOUGHT_DATA':
 			return action.payload;
 		case 'DELETE_THOUGHT':
-			console.log(posts)
-			return posts.filter(post => post._id !== action.payload)
+			return posts.filter(post => post._id !== action.payload);
 		case 'ADD_THOUGHT':
+			if (posts === null) {
+				return [action.payload];
+			}
 			return [...posts, action.payload]
 		default:
 			return posts;

@@ -36,13 +36,14 @@ class PostList extends React.Component {
         if (posts === null || posts.length === 0) {
             return null; //don't render this component if there are no posts
         }
-        const listItems = posts.map((post, index) =>
+        const listItems = posts.map((post) =>
             <Collapsible key={ post._id } trigger={post.firstName + " " + post.lastName}>
-                <p>{post.thought}</p>
+                <p>{ post.thought }</p>
                 <div className="row">
                     <button onClick={ this.updatePost.bind(this, post) }>Update</button>
                     <button onClick={ this.deletePost.bind(this, post._id) }>Delete</button>
                 </div>
+                <p>{ post.createdAt }</p>
             </Collapsible>
         );
         return (
