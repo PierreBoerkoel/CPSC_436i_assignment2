@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const API_PORT = process.env.PORT;
+
 export const updateField = (newValue, fieldType) => {
     switch(fieldType) {
         case "firstName":
@@ -36,7 +38,7 @@ export const putThought = (newPost) => {
 
 export const putThoughtData = (newPost) => {
     return (dispatch) => {
-        return axios.post('http://localhost:3001/api/putData',
+        return axios.post('http://localhost:' + (API_PORT || '3001') + '/api/putData',
             {   
                 _id: newPost._id,
                 firstName: newPost.firstName,
@@ -74,7 +76,7 @@ export const fetchData = (data) => {
 
 export const fetchThoughtDataFromDb = () => {
     return (dispatch) => {
-        return axios.get('http://localhost:3001/api/getData')
+        return axios.get('http://localhost:' + (API_PORT || '3001') + '/api/getData')
             .catch(error => {
                 throw(error);
             }).then(response => {
@@ -91,7 +93,7 @@ export const deleteThought = (postid) => {
 }
 export const deleteThoughtDataFromDb = (postid) => {
     return (dispatch) => {
-        return axios.delete('http://localhost:3001/api/deleteData', {
+        return axios.delete('http://localhost:' + (API_PORT || '3001') + '/api/deleteData', {
             data: {
                 id: postid
             }
