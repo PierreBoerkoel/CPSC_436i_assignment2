@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
 
-const API_PORT = 3001;
+const API_PORT = process.env.PORT || 5000;
+const path = require('path');
 const app = express();
 app.use(cors());
 const router = express.Router();
@@ -21,6 +22,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, '/../client/build')));
+
+// app.get('*', function(req, res) {
+//   res.sendFile(path.join(__dirname, '/../client/build', 'index.html'));
+// });
 
 router.get('/getData', (req, res) => {
   Data.find((err, data) => {
@@ -67,4 +73,4 @@ router.post('/putData', (req, res) => {
 
 app.use('/api', router);
 
-app.listen(process.env.PORT || API_PORT);
+app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

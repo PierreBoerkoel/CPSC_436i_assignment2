@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
+    "postinstall": "concurrently \"cd backend && npm install\" \"cd client && npm install\"",
+    "start": "concurrently \"npm run client\" \"npm run backend\"",
+    "client": "cd client && npm run build",
+    "backend": "cd backend && node server.js"
   },
   "keywords": [],
   "author": "",
